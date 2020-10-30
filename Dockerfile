@@ -1,4 +1,4 @@
-FROM redis:5.0.10-alpine
+FROM redis:6.0.5-alpine
 
 RUN apk add --no-cache \
     stunnel \
@@ -6,6 +6,9 @@ RUN apk add --no-cache \
     py3-pip
 
 RUN python3 -m pip install honcho==1.0.*
+
+COPY ./certs/cert.pem /certs/cert.pem
+COPY ./certs/key.pem /certs/key.pem
 
 WORKDIR /
 COPY stunnel.conf ProcfileWithoutPwd ProcfileWithPwd start.sh /
